@@ -20,6 +20,7 @@ export default async function (req, res) {
             }
         }catch(err) {
             console.log(err)
+            return res.status(404).json({message: 'Error'})
         }
 
     }

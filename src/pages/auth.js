@@ -179,15 +179,15 @@ Auth.getLayout = getMainLayout
 
 
 export async function getServerSideProps(context) {
-    const { authen } = parse(context.req.headers.cookie || '')
-    if (authen) {
-        return {
-            redirect: {
-                destination: '/account',
-                permanent: false,
-            }
-        }
-    }
+    // const { authen } = parse(context.req.headers.cookie || '')
+    // if (authen) {
+    //     return {
+    //         redirect: {
+    //             destination: '/account',
+    //             permanent: false,
+    //         }
+    //     }
+    // }
 
 
     return {

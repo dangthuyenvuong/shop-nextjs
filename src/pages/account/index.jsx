@@ -127,15 +127,15 @@ PersonnalInfo.getLayout = getProfileLayout
 
 
 export async function getServerSideProps(context) {
-    const { authen } = parse(context.req.headers.cookie || '')
-    if (!authen) {
-        return {
-            redirect: {
-                destination: '/auth',
-                permanent: false,
-            }
-        }
-    }
+    // const { authen } = parse(context.req.headers.cookie || '')
+    // if (!authen) {
+    //     return {
+    //         redirect: {
+    //             destination: '/auth',
+    //             permanent: false,
+    //         }
+    //     }
+    // }
 
 
     return {
