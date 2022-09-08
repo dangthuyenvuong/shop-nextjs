@@ -1,7 +1,30 @@
 import React from 'react'
 import { getMainLayout } from '../components/layout/MainLayout'
+import authService from '../services/auth.service'
+import { useRouter } from 'next/router'
+import { parse } from 'cookie'
+
+
 
 export default function Auth() {
+    const { push } = useRouter()
+
+    const onLogin = async (ev) => {
+        ev.preventDefault()
+        const formData = new FormData(ev.currentTarget)
+        const form = {}
+        for (var pair of formData.entries()) {
+            form[pair[0]] = pair[1]
+        }
+
+        try {
+            const res = await authService.login(form)
+            push('/account')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <section className="py-12">
             <div className="container">
@@ -13,7 +36,7 @@ export default function Auth() {
                                 {/* Heading */}
                                 <h6 className="mb-7">Returning Customer</h6>
                                 {/* Form */}
-                                <form>
+                                <form onSubmit={onLogin}>
                                     <div className="row">
                                         <div className="col-12">
                                             {/* Email */}
@@ -21,7 +44,7 @@ export default function Auth() {
                                                 <label className="sr-only" htmlFor="loginEmail">
                                                     Email Address *
                                                 </label>
-                                                <input className="form-control form-control-sm" id="loginEmail" type="email" placeholder="Email Address *" required />
+                                                <input className="form-control form-control-sm" name="username" id="loginEmail" type="email" placeholder="Email Address *" required />
                                             </div>
                                         </div>
                                         <div className="col-12">
@@ -30,7 +53,7 @@ export default function Auth() {
                                                 <label className="sr-only" htmlFor="loginPassword">
                                                     Password *
                                                 </label>
-                                                <input className="form-control form-control-sm" id="loginPassword" type="password" placeholder="Password *" required />
+                                                <input className="form-control form-control-sm" id="loginPassword" name="password" type="password" placeholder="Password *" required />
                                             </div>
                                         </div>
                                         <div className="col-12 col-md">
@@ -153,3 +176,21 @@ export default function Auth() {
 
 
 Auth.getLayout = getMainLayout
+
+
+export async function getServerSideProps(context) {
+    const { authen } = parse(context.req.headers.cookie || '')
+    if (authen) {
+        return {
+            redirect: {
+                destination: '/account',
+                permanent: false,
+            }
+        }
+    }
+
+
+    return {
+        props: {}
+    }
+}

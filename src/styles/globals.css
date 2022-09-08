@@ -24,3 +24,13 @@ a {
     background: black;
   }
 }
+
+.PageLoading{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.PageLoading .ant-spin-spinning{
+  transform: scale(1.5);
+}

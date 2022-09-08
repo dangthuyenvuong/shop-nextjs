@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import MainLayout from '../components/layout/MainLayout'
+import 'antd/dist/antd.css';
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {

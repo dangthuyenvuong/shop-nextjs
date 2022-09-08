@@ -2,8 +2,18 @@ import React from 'react'
 import MainLayout from './MainLayout'
 import Link from '../Link'
 import NavLink from '../NavLink'
+import authService from '../../services/auth.service'
+import { useRouter } from 'next/router'
 
 export default function ProfileLayout({ children }) {
+    const { push } = useRouter()
+    const onLogout = async (ev) => {
+        ev.preventDefault()
+        try {
+            await authService.logout()
+            push('/auth')
+        } catch (err) { }
+    }
     return (
         <MainLayout>
             <section className="pt-7 pb-12">
@@ -34,7 +44,7 @@ export default function ProfileLayout({ children }) {
                                     <a className="list-group-item list-group-item-action dropright-toggle " href="account-payment.html">
                                         Payment Methods
                                     </a>
-                                    <a className="list-group-item list-group-item-action dropright-toggle" href="#!">
+                                    <a onClick={onLogout} className="list-group-item list-group-item-action dropright-toggle" href="#!">
                                         Logout
                                     </a>
                                 </div>
